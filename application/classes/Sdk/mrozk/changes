@@ -1,0 +1,52 @@
+Переименовать имя на ФИО application/classes/Sdk/application/templates/contactForm.php
+application/classes/InsalesApi.php  изменить  $api_key, $secret_key
+перекинуть фс   вфів
+Изменить настройки БД
+
+(insalesuser_id)
+----------------------------------------------------------------
+Изменить /home/mrozk/git/insales/application/classes/Sdk/application/classes/DDelivery/DataBase/Order.php вставку и обновление в БД (insalesuser_id)
+$insalesuser_id = $order->insalesuser_id;
+	    //$this->pdo->beginTransaction();
+	    if( $this->isRecordExist($localId) )
+	    {
+	    	$query = "UPDATE {$this->prefix}orders SET to_housing = :to_housing, insalesuser_id = :insalesuser_id, comment = :comment, payment_variant = :payment_variant, type = :type, amount =:amount,
+	    			  to_city = :to_city,
+	    			  ddeliveryorder_id = :ddeliveryorder_id, delivery_company = :delivery_company,
+	    			  dimension_side1 = :dimension_side1, dimension_side2 = :dimension_side2,
+	    			  dimension_side3 = :dimension_side3, confirmed = :confirmed,
+			          weight = :weight, declared_price = :declared_price, payment_price = :payment_price,
+	    			  to_name = :to_name, to_phone = :to_phone, goods_description = :goods_description,
+	    			  to_street= :to_street, to_house = :to_house, to_flat = :to_flat, date = :date,
+			          shop_refnum =:shop_refnum, products = :products, local_status = :local_status,
+			          dd_status = :dd_status, first_name = :first_name, second_name =:second_name,
+	    			  point = :point  WHERE id=:id";
+	    	$stmt = $this->pdo->prepare($query);
+	    	$stmt->bindParam( ':id', $localId );
+            $wasUpdate = 1;
+	    }
+	    else
+	    {
+	    	$query = "INSERT INTO {$this->prefix}orders ( to_housing, insalesuser_id,comment, payment_variant, type, amount, to_city, ddeliveryorder_id,
+	    			  delivery_company, dimension_side1,
+                      dimension_side2, dimension_side3, confirmed, weight, declared_price,
+	    			  payment_price, to_name, to_phone, goods_description, to_flat, to_house,
+	    			  to_street, date, shop_refnum, products, local_status, dd_status,
+	    			  first_name, second_name, point)
+	                  VALUES( :to_housing, :insalesuser_id,:comment, :payment_variant, :type, :amount, :to_city, :ddeliveryorder_id, :delivery_company,
+	    			  :dimension_side1, :dimension_side2, :dimension_side3, :confirmed, :weight,
+	    			  :declared_price, :payment_price, :to_name, :to_phone, :goods_description,
+	    			  :to_flat, :to_house, :to_street,  :date, :shop_refnum, :products,
+	    			  :local_status, :dd_status, :first_name, :second_name, :point )";
+	    	$stmt = $this->pdo->prepare($query);
+	    }
+----------------------------------------------------------------
+Изменить /home/mrozk/git/insales/application/classes/Sdk/application/classes/DDelivery/DDeliveryUI.php initOrder
+$currentOrder->insalesuser_id = $item->insalesuser_id;
+----------------------------------------------------------------
+/home/mrozk/git/insales/application/classes/Sdk/application/classes/DDelivery/Order/DDeliveryOrder.php атрибут
+public $insalesuser_id = 0;
+----------------------------------------------------------------
+/home/mrozk/git/insales/html/js/ddelivery.js   --   удалить строчку про window.params
+
+
